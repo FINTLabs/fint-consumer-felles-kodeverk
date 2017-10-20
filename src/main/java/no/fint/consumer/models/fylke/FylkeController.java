@@ -79,7 +79,7 @@ public class FylkeController {
         return assembler.resources(fylke);
     }
 
-    @GetMapping("/***fixme***/{id}")
+    @GetMapping("/SystemId/{id}")
     public ResponseEntity getFylke(@PathVariable String id,
                                              @RequestHeader(HeaderConstants.ORG_ID) String orgId,
                                              @RequestHeader(HeaderConstants.CLIENT) String client) {

@@ -1,5 +1,6 @@
 package no.fint.consumer.models.landkode;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 import no.fint.cache.CacheService;
 import no.fint.cache.FintCache;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import no.fint.model.felles.kodeverk.iso.Landkode;
@@ -59,8 +61,8 @@ public class LandkodeCacheService extends CacheService<FintResource<Landkode>> {
         consumerEventUtil.send(event);
     }
 
-    public Optional<FintResource<Landkode>> getLandkode(String orgId, String ***fixme***) {
-        return getOne(orgId, (fintResource) -> fintResource.getResource().get***fixme***().getIdentifikatorverdi().equals(***fixme***));
+    public Optional<FintResource<Landkode>> getLandkode(String orgId, String SystemId) {
+        return getOne(orgId, (fintResource) -> fintResource.getResource().getSystemId().getIdentifikatorverdi().equals(SystemId));
     }
 
 	@Override

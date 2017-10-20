@@ -15,7 +15,7 @@ public class LandkodeAssembler extends FintResourceAssembler<Landkode> {
 
     @Override
     public FintResourceSupport assemble(Landkode landkode , FintResource<Landkode> fintResource) {
-        return createResourceWithId(landkode.get***fixme***().getIdentifikatorverdi(), fintResource, "***fixme***");
+        return createResourceWithId(landkode.getSystemId().getIdentifikatorverdi(), fintResource, "SystemId");
     }
 }
 

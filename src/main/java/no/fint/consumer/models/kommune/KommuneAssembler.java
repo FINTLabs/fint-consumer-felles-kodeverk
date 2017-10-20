@@ -15,7 +15,7 @@ public class KommuneAssembler extends FintResourceAssembler<Kommune> {
 
     @Override
     public FintResourceSupport assemble(Kommune kommune , FintResource<Kommune> fintResource) {
-        return createResourceWithId(kommune.get***fixme***().getIdentifikatorverdi(), fintResource, "***fixme***");
+        return createResourceWithId(kommune.getSystemId().getIdentifikatorverdi(), fintResource, "SystemId");
     }
 }
 

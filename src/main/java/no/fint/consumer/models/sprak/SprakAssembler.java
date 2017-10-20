@@ -15,7 +15,7 @@ public class SprakAssembler extends FintResourceAssembler<Sprak> {
 
     @Override
     public FintResourceSupport assemble(Sprak sprak , FintResource<Sprak> fintResource) {
-        return createResourceWithId(sprak.get***fixme***().getIdentifikatorverdi(), fintResource, "***fixme***");
+        return createResourceWithId(sprak.getSystemId().getIdentifikatorverdi(), fintResource, "SystemId");
     }
 }
 
