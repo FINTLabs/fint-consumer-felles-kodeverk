@@ -1,0 +1,27 @@
+GET https://beta.felleskomponent.no/felles/kodeverk/kjonn/systemId/1
+x-org-id: fint.felles.kodeverk
+x-client: asgeir
+
+###
+
+GET https://beta.felleskomponent.no/felles/kodeverk/land/systemId/NO
+x-org-id: fint.felles.kodeverk
+x-client: asgeir
+
+###
+
+GET https://beta.felleskomponent.no/felles/kodeverk/sprak/systemId/nb
+x-org-id: fint.felles.kodeverk
+x-client: asgeir
+
+###
+
+GET https://beta.felleskomponent.no/felles/kodeverk/fylke/systemId/06
+x-org-id: fint.felles.kodeverk
+x-client: asgeir
+
+###
+
+GET https://beta.felleskomponent.no/felles/kodeverk/kommune/systemId/0602
+x-org-id: fint.felles.kodeverk
+x-client: asgeir
