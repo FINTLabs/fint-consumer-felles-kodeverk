@@ -15,7 +15,7 @@ public class KjonnAssembler extends FintResourceAssembler<Kjonn> {
 
     @Override
     public FintResourceSupport assemble(Kjonn kjonn , FintResource<Kjonn> fintResource) {
-        return createResourceWithId(kjonn.getSystemId().getIdentifikatorverdi(), fintResource, "SystemId");
+        return createResourceWithId(kjonn.getSystemId().getIdentifikatorverdi(), fintResource, "systemId");
     }
 }
 

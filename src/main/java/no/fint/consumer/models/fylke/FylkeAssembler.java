@@ -15,7 +15,7 @@ public class FylkeAssembler extends FintResourceAssembler<Fylke> {
 
     @Override
     public FintResourceSupport assemble(Fylke fylke , FintResource<Fylke> fintResource) {
-        return createResourceWithId(fylke.getSystemId().getIdentifikatorverdi(), fintResource, "SystemId");
+        return createResourceWithId(fylke.getSystemId().getIdentifikatorverdi(), fintResource, "systemId");
     }
 }
 

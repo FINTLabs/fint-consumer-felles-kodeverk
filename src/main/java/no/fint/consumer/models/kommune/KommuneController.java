@@ -79,7 +79,7 @@ public class KommuneController {
         return assembler.resources(kommune);
     }
 
-    @GetMapping("/SystemId/{id}")
+    @GetMapping("/systemId/{id}")
     public ResponseEntity getKommune(@PathVariable String id,
                                              @RequestHeader(HeaderConstants.ORG_ID) String orgId,
                                              @RequestHeader(HeaderConstants.CLIENT) String client) {

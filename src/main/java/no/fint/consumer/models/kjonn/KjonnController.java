@@ -79,7 +79,7 @@ public class KjonnController {
         return assembler.resources(kjonn);
     }
 
-    @GetMapping("/SystemId/{id}")
+    @GetMapping("/systemId/{id}")
     public ResponseEntity getKjonn(@PathVariable String id,
                                              @RequestHeader(HeaderConstants.ORG_ID) String orgId,
                                              @RequestHeader(HeaderConstants.CLIENT) String client) {

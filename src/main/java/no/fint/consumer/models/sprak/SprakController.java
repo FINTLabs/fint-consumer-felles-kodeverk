@@ -79,7 +79,7 @@ public class SprakController {
         return assembler.resources(sprak);
     }
 
-    @GetMapping("/SystemId/{id}")
+    @GetMapping("/systemId/{id}")
     public ResponseEntity getSprak(@PathVariable String id,
                                              @RequestHeader(HeaderConstants.ORG_ID) String orgId,
                                              @RequestHeader(HeaderConstants.CLIENT) String client) {

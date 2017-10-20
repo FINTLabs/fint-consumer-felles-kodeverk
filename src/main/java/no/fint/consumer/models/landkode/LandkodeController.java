@@ -79,7 +79,7 @@ public class LandkodeController {
         return assembler.resources(landkode);
     }
 
-    @GetMapping("/SystemId/{id}")
+    @GetMapping("/systemId/{id}")
     public ResponseEntity getLandkode(@PathVariable String id,
                                              @RequestHeader(HeaderConstants.ORG_ID) String orgId,
                                              @RequestHeader(HeaderConstants.CLIENT) String client) {
