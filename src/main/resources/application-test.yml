@@ -9,5 +9,8 @@ fint:
 
  relations:
    force-https: false
+   
+ consumer:
+   cache-manager: default
 
 link-mapper-base-url: http://localhost:8080

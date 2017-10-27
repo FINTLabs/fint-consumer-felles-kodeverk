@@ -39,10 +39,7 @@ public class KjonnCacheService extends CacheService<FintResource<Kjonn>> {
 
     @PostConstruct
     public void init() {
-        Arrays.stream(props.getOrgs()).forEach(orgId -> {
-            FintCache<FintResource<Kjonn>> cache = new FintCache<>();
-            put(orgId, cache);
-        });
+        Arrays.stream(props.getOrgs()).forEach(this::createCache);
     }
 
     @Scheduled(initialDelayString = ConsumerProps.CACHE_INITIALDELAY_KJONN, fixedRateString = ConsumerProps.CACHE_FIXEDRATE_KJONN)

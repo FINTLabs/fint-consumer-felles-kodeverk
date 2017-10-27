@@ -39,10 +39,7 @@ public class KommuneCacheService extends CacheService<FintResource<Kommune>> {
 
     @PostConstruct
     public void init() {
-        Arrays.stream(props.getOrgs()).forEach(orgId -> {
-            FintCache<FintResource<Kommune>> cache = new FintCache<>();
-            put(orgId, cache);
-        });
+        Arrays.stream(props.getOrgs()).forEach(this::createCache);
     }
 
     @Scheduled(initialDelayString = ConsumerProps.CACHE_INITIALDELAY_KOMMUNE, fixedRateString = ConsumerProps.CACHE_FIXEDRATE_KOMMUNE)

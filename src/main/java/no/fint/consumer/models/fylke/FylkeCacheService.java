@@ -39,10 +39,7 @@ public class FylkeCacheService extends CacheService<FintResource<Fylke>> {
 
     @PostConstruct
     public void init() {
-        Arrays.stream(props.getOrgs()).forEach(orgId -> {
-            FintCache<FintResource<Fylke>> cache = new FintCache<>();
-            put(orgId, cache);
-        });
+        Arrays.stream(props.getOrgs()).forEach(this::createCache);
     }
 
     @Scheduled(initialDelayString = ConsumerProps.CACHE_INITIALDELAY_FYLKE, fixedRateString = ConsumerProps.CACHE_FIXEDRATE_FYLKE)

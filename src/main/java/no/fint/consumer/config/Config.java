@@ -1,8 +1,10 @@
 package no.fint.consumer.config;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import no.fint.cache.CacheManager;
+import no.fint.cache.FintCacheManager;
+import no.fint.cache.HazelcastCacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,25 +18,38 @@ import java.util.Map;
 @Configuration
 public class Config {
 
-    @Value("${server.context-path:}")
-    private String contextPath;
+	@Value("${fint.consumer.cache-manager:default}")
+	private String cacheManagerType;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+	@Bean
+	public CacheManager<?> cacheManager() {
+		switch (cacheManagerType.toUpperCase()) {
+		case "HAZELCAST":
+			return new HazelcastCacheManager<>();
+		default:
+			return new FintCacheManager<>();
+		}
+	}
 
-    @PostConstruct
-    public void init() {
-        objectMapper.setDateFormat(new ISO8601DateFormat());
-    }
+	@Value("${server.context-path:}")
+	private String contextPath;
 
-    @Qualifier("linkMapper")
-    @Bean
-    public Map<String, String> linkMapper() {
-        return new HashMap<>();
-    }
+	@Autowired
+	private ObjectMapper objectMapper;
 
-    String fullPath(String path) {
-        return String.format("%s%s", contextPath, path);
-    }
+	@PostConstruct
+	public void init() {
+		objectMapper.setDateFormat(new ISO8601DateFormat());
+	}
+
+	@Qualifier("linkMapper")
+	@Bean
+	public Map<String, String> linkMapper() {
+		return new HashMap<>();
+	}
+
+	String fullPath(String path) {
+		return String.format("%s%s", contextPath, path);
+	}
 
 }

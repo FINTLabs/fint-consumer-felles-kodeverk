@@ -39,10 +39,7 @@ public class SprakCacheService extends CacheService<FintResource<Sprak>> {
 
     @PostConstruct
     public void init() {
-        Arrays.stream(props.getOrgs()).forEach(orgId -> {
-            FintCache<FintResource<Sprak>> cache = new FintCache<>();
-            put(orgId, cache);
-        });
+        Arrays.stream(props.getOrgs()).forEach(this::createCache);
     }
 
     @Scheduled(initialDelayString = ConsumerProps.CACHE_INITIALDELAY_SPRAK, fixedRateString = ConsumerProps.CACHE_FIXEDRATE_SPRAK)

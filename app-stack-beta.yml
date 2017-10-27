@@ -48,6 +48,7 @@ services:
       fint.relations.default-base-url: "https://beta.felleskomponent.no"
       fint.audit.mongo.hostname: fint-mongodb
       fint.audit.mongo.databasename: fint-audit-beta
+      fint.consumer.cache-manager: hazelcast
     deploy:
       placement:
         constraints:
