@@ -2,24 +2,44 @@ package no.fint.consumer.event;
 
 import lombok.extern.slf4j.Slf4j;
 import no.fint.cache.CacheService;
+import no.fint.consumer.config.ConsumerProps;
 import no.fint.event.model.Event;
-import no.fint.events.annotations.FintEventListener;
-import no.fint.events.queue.QueueType;
+import no.fint.events.FintEventListener;
+import no.fint.events.FintEvents;
+import no.fint.model.felles.kodeverk.KodeverkActions;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+
 @Slf4j
 @Component
-public class EventListener {
+public class EventListener implements FintEventListener {
 
     @Autowired
     private List<CacheService> cacheServices;
+    
+	@Autowired
+	private FintEvents fintEvents;
 
-    @FintEventListener(type = QueueType.UPSTREAM)
-    public void recieve(Event event) {
+    @Autowired
+    private ConsumerProps props;
+
+    @PostConstruct
+    public void init() {
+    	for (String orgId : props.getOrgs()) {
+    		fintEvents.registerUpstreamListener(orgId, this);
+    	}
+    	log.info("Upstream listeners registered.");
+    }
+
+	@Override
+	public void accept(Event event) {
         log.debug("Received event: {}", event);
         String action = event.getAction();
         List<CacheService> supportedCacheServices = cacheServices.stream().filter(cacheService -> cacheService.supportsAction(action)).collect(Collectors.toList());
@@ -29,4 +49,5 @@ public class EventListener {
             log.warn("Unhandled event: {}", event.getAction());
         }
     }
+	
 }
