@@ -55,23 +55,19 @@ public class FylkeController {
     }
 
     @GetMapping
-    public ResponseEntity getFylke(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
-                                               @RequestHeader(HeaderConstants.CLIENT) String client,
-                                               @RequestParam(required = false) Long sinceTimeStamp) {
-        log.info("OrgId: {}", orgId);
-        log.info("Client: {}", client);
+    public ResponseEntity getFylke(@RequestParam(required = false) Long sinceTimeStamp) {
         log.info("SinceTimeStamp: {}", sinceTimeStamp);
 
-        Event event = new Event(orgId, Constants.COMPONENT, KodeverkActions.GET_ALL_FYLKE, client);
+        Event event = new Event(Constants.ORG_ID, Constants.COMPONENT, KodeverkActions.GET_ALL_FYLKE, Constants.ORG_ID);
         fintAuditService.audit(event);
 
         fintAuditService.audit(event, Status.CACHE);
 
         List<FintResource<Fylke>> fylke;
         if (sinceTimeStamp == null) {
-            fylke = cacheService.getAll(orgId);
+            fylke = cacheService.getAll(Constants.ORG_ID);
         } else {
-            fylke = cacheService.getAll(orgId, sinceTimeStamp);
+            fylke = cacheService.getAll(Constants.ORG_ID, sinceTimeStamp);
         }
 
         fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
@@ -80,18 +76,13 @@ public class FylkeController {
     }
 
     @GetMapping("/systemId/{id}")
-    public ResponseEntity getFylke(@PathVariable String id,
-                                             @RequestHeader(HeaderConstants.ORG_ID) String orgId,
-                                             @RequestHeader(HeaderConstants.CLIENT) String client) {
-        log.info("OrgId: {}", orgId);
-        log.info("Client: {}", client);
-
-        Event event = new Event(orgId, Constants.COMPONENT, KodeverkActions.GET_FYLKE, client);
+    public ResponseEntity getFylke(@PathVariable String id) {
+        Event event = new Event(Constants.ORG_ID, Constants.COMPONENT, KodeverkActions.GET_FYLKE, Constants.ORG_ID);
         fintAuditService.audit(event);
 
         fintAuditService.audit(event, Status.CACHE);
 
-        Optional<FintResource<Fylke>> fylke = cacheService.getFylke(orgId, id);
+        Optional<FintResource<Fylke>> fylke = cacheService.getFylke(Constants.ORG_ID, id);
 
         fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
 

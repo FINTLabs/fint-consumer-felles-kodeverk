@@ -1,7 +1,6 @@
 package no.fint.consumer.config;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Getter
@@ -20,7 +19,6 @@ public class ConsumerProps {
 	public static final String CACHE_INITIALDELAY_SPRAK = "${fint.consumer.cache.initialDelay.sprak:90000}";
 
 
-	@Value("${fint.events.orgIds:fint.no}")
-        private String[] orgs;
+    private String[] orgs = { "fint.health", Constants.ORG_ID };
 
 }

@@ -55,23 +55,19 @@ public class KommuneController {
     }
 
     @GetMapping
-    public ResponseEntity getKommune(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
-                                               @RequestHeader(HeaderConstants.CLIENT) String client,
-                                               @RequestParam(required = false) Long sinceTimeStamp) {
-        log.info("OrgId: {}", orgId);
-        log.info("Client: {}", client);
+    public ResponseEntity getKommune(@RequestParam(required = false) Long sinceTimeStamp) {
         log.info("SinceTimeStamp: {}", sinceTimeStamp);
 
-        Event event = new Event(orgId, Constants.COMPONENT, KodeverkActions.GET_ALL_KOMMUNE, client);
+        Event event = new Event(Constants.ORG_ID, Constants.COMPONENT, KodeverkActions.GET_ALL_KOMMUNE, Constants.ORG_ID);
         fintAuditService.audit(event);
 
         fintAuditService.audit(event, Status.CACHE);
 
         List<FintResource<Kommune>> kommune;
         if (sinceTimeStamp == null) {
-            kommune = cacheService.getAll(orgId);
+            kommune = cacheService.getAll(Constants.ORG_ID);
         } else {
-            kommune = cacheService.getAll(orgId, sinceTimeStamp);
+            kommune = cacheService.getAll(Constants.ORG_ID, sinceTimeStamp);
         }
 
         fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
@@ -80,18 +76,14 @@ public class KommuneController {
     }
 
     @GetMapping("/systemId/{id}")
-    public ResponseEntity getKommune(@PathVariable String id,
-                                             @RequestHeader(HeaderConstants.ORG_ID) String orgId,
-                                             @RequestHeader(HeaderConstants.CLIENT) String client) {
-        log.info("OrgId: {}", orgId);
-        log.info("Client: {}", client);
+    public ResponseEntity getKommune(@PathVariable String id) {
 
-        Event event = new Event(orgId, Constants.COMPONENT, KodeverkActions.GET_KOMMUNE, client);
+        Event event = new Event(Constants.ORG_ID, Constants.COMPONENT, KodeverkActions.GET_KOMMUNE, Constants.ORG_ID);
         fintAuditService.audit(event);
 
         fintAuditService.audit(event, Status.CACHE);
 
-        Optional<FintResource<Kommune>> kommune = cacheService.getKommune(orgId, id);
+        Optional<FintResource<Kommune>> kommune = cacheService.getKommune(Constants.ORG_ID, id);
 
         fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
 

@@ -55,23 +55,19 @@ public class KjonnController {
     }
 
     @GetMapping
-    public ResponseEntity getKjonn(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
-                                               @RequestHeader(HeaderConstants.CLIENT) String client,
-                                               @RequestParam(required = false) Long sinceTimeStamp) {
-        log.info("OrgId: {}", orgId);
-        log.info("Client: {}", client);
+    public ResponseEntity getKjonn(@RequestParam(required = false) Long sinceTimeStamp) {
         log.info("SinceTimeStamp: {}", sinceTimeStamp);
 
-        Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_ALL_KJONN, client);
+        Event event = new Event(Constants.ORG_ID, Constants.COMPONENT, IsoActions.GET_ALL_KJONN, Constants.ORG_ID);
         fintAuditService.audit(event);
 
         fintAuditService.audit(event, Status.CACHE);
 
         List<FintResource<Kjonn>> kjonn;
         if (sinceTimeStamp == null) {
-            kjonn = cacheService.getAll(orgId);
+            kjonn = cacheService.getAll(Constants.ORG_ID);
         } else {
-            kjonn = cacheService.getAll(orgId, sinceTimeStamp);
+            kjonn = cacheService.getAll(Constants.ORG_ID, sinceTimeStamp);
         }
 
         fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
@@ -80,18 +76,14 @@ public class KjonnController {
     }
 
     @GetMapping("/systemId/{id}")
-    public ResponseEntity getKjonn(@PathVariable String id,
-                                             @RequestHeader(HeaderConstants.ORG_ID) String orgId,
-                                             @RequestHeader(HeaderConstants.CLIENT) String client) {
-        log.info("OrgId: {}", orgId);
-        log.info("Client: {}", client);
+    public ResponseEntity getKjonn(@PathVariable String id) {
 
-        Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_KJONN, client);
+        Event event = new Event(Constants.ORG_ID, Constants.COMPONENT, IsoActions.GET_KJONN, Constants.ORG_ID);
         fintAuditService.audit(event);
 
         fintAuditService.audit(event, Status.CACHE);
 
-        Optional<FintResource<Kjonn>> kjonn = cacheService.getKjonn(orgId, id);
+        Optional<FintResource<Kjonn>> kjonn = cacheService.getKjonn(Constants.ORG_ID, id);
 
         fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
 

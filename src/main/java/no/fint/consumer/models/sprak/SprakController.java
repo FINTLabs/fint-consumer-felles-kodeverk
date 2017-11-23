@@ -55,23 +55,19 @@ public class SprakController {
     }
 
     @GetMapping
-    public ResponseEntity getSprak(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
-                                               @RequestHeader(HeaderConstants.CLIENT) String client,
-                                               @RequestParam(required = false) Long sinceTimeStamp) {
-        log.info("OrgId: {}", orgId);
-        log.info("Client: {}", client);
+    public ResponseEntity getSprak(@RequestParam(required = false) Long sinceTimeStamp) {
         log.info("SinceTimeStamp: {}", sinceTimeStamp);
 
-        Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_ALL_SPRAK, client);
+        Event event = new Event(Constants.ORG_ID, Constants.COMPONENT, IsoActions.GET_ALL_SPRAK, Constants.ORG_ID);
         fintAuditService.audit(event);
 
         fintAuditService.audit(event, Status.CACHE);
 
         List<FintResource<Sprak>> sprak;
         if (sinceTimeStamp == null) {
-            sprak = cacheService.getAll(orgId);
+            sprak = cacheService.getAll(Constants.ORG_ID);
         } else {
-            sprak = cacheService.getAll(orgId, sinceTimeStamp);
+            sprak = cacheService.getAll(Constants.ORG_ID, sinceTimeStamp);
         }
 
         fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
@@ -80,18 +76,14 @@ public class SprakController {
     }
 
     @GetMapping("/systemId/{id}")
-    public ResponseEntity getSprak(@PathVariable String id,
-                                             @RequestHeader(HeaderConstants.ORG_ID) String orgId,
-                                             @RequestHeader(HeaderConstants.CLIENT) String client) {
-        log.info("OrgId: {}", orgId);
-        log.info("Client: {}", client);
+    public ResponseEntity getSprak(@PathVariable String id) {
 
-        Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_SPRAK, client);
+        Event event = new Event(Constants.ORG_ID, Constants.COMPONENT, IsoActions.GET_SPRAK, Constants.ORG_ID);
         fintAuditService.audit(event);
 
         fintAuditService.audit(event, Status.CACHE);
 
-        Optional<FintResource<Sprak>> sprak = cacheService.getSprak(orgId, id);
+        Optional<FintResource<Sprak>> sprak = cacheService.getSprak(Constants.ORG_ID, id);
 
         fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
 
