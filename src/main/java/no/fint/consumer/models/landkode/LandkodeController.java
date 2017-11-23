@@ -55,23 +55,19 @@ public class LandkodeController {
     }
 
     @GetMapping
-    public ResponseEntity getLandkode(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
-                                               @RequestHeader(HeaderConstants.CLIENT) String client,
-                                               @RequestParam(required = false) Long sinceTimeStamp) {
-        log.info("OrgId: {}", orgId);
-        log.info("Client: {}", client);
+    public ResponseEntity getLandkode(@RequestParam(required = false) Long sinceTimeStamp) {
         log.info("SinceTimeStamp: {}", sinceTimeStamp);
 
-        Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_ALL_LANDKODE, client);
+        Event event = new Event(Constants.ORG_ID, Constants.COMPONENT, IsoActions.GET_ALL_LANDKODE, Constants.ORG_ID);
         fintAuditService.audit(event);
 
         fintAuditService.audit(event, Status.CACHE);
 
         List<FintResource<Landkode>> landkode;
         if (sinceTimeStamp == null) {
-            landkode = cacheService.getAll(orgId);
+            landkode = cacheService.getAll(Constants.ORG_ID);
         } else {
-            landkode = cacheService.getAll(orgId, sinceTimeStamp);
+            landkode = cacheService.getAll(Constants.ORG_ID, sinceTimeStamp);
         }
 
         fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
@@ -80,18 +76,14 @@ public class LandkodeController {
     }
 
     @GetMapping("/systemId/{id}")
-    public ResponseEntity getLandkode(@PathVariable String id,
-                                             @RequestHeader(HeaderConstants.ORG_ID) String orgId,
-                                             @RequestHeader(HeaderConstants.CLIENT) String client) {
-        log.info("OrgId: {}", orgId);
-        log.info("Client: {}", client);
+    public ResponseEntity getLandkode(@PathVariable String id) {
 
-        Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_LANDKODE, client);
+        Event event = new Event(Constants.ORG_ID, Constants.COMPONENT, IsoActions.GET_LANDKODE, Constants.ORG_ID);
         fintAuditService.audit(event);
 
         fintAuditService.audit(event, Status.CACHE);
 
-        Optional<FintResource<Landkode>> landkode = cacheService.getLandkode(orgId, id);
+        Optional<FintResource<Landkode>> landkode = cacheService.getLandkode(Constants.ORG_ID, id);
 
         fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
 
