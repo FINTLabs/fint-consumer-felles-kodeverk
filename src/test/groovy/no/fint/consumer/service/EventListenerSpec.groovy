@@ -13,7 +13,7 @@ class EventListenerSpec extends Specification {
 
     def "No exception is thrown when receiving event"() {
         when:
-        eventListener.recieve(new Event(corrId: '123'))
+        eventListener.accept(new Event(corrId: '123'))
 
         then:
         noExceptionThrown()

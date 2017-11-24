@@ -33,7 +33,7 @@ public class Config {
 
 	@Value("${server.context-path:}")
 	private String contextPath;
-
+		
 	@Autowired
 	private ObjectMapper objectMapper;
 
