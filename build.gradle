@@ -53,8 +53,7 @@ dependencies {
     compile('no.fint:fint-event-model:2.0.1')
     compile('no.fint:fint-felles-model-java:2.2.1')
     compile('no.fint:fint-relations:1.2.0-1')
-    //compile('no.fint:fint-events:1.0.1')
-    compile 'no.fint:fint-events:0.0.0-20171123-083100'
+    compile('no.fint:fint-events:2.0.0-1')
     compile('no.fint:fint-audit-mongo-plugin:1.1.1')
     compile('no.fint:fint-cache:2.0.0-alpha-3')
     compile('no.fint:fint-dependencies:0.0.3')
