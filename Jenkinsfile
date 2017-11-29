@@ -14,8 +14,8 @@ pipeline {
                 unstash 'version'
                 script {
                     VERSION=readFile('version.txt').trim()
+                    def props = readProperties 'gradle.properties'
                 }
-                def props = readProperties 'gradle.properties'
                 sh "docker build -t 'dtr.rogfk.no/fint-beta/consumer-felles-kodeverk:${VERSION}+${props.apiVersion}' ."
             }
         }
