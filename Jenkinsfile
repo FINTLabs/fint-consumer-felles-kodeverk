@@ -14,9 +14,10 @@ pipeline {
                 unstash 'version'
                 script {
                     VERSION=readFile('version.txt').trim()
-                    def props = readProperties file:'gradle.properties'
+                    props=readProperties file: 'gradle.properties'
+                    API_VERSION=props.apiVersion
                 }
-                sh "docker build -t 'dtr.rogfk.no/fint-beta/consumer-felles-kodeverk:${VERSION}+${props.apiVersion}' ."
+                sh "docker build -t 'dtr.rogfk.no/fint-beta/consumer-felles-kodeverk:${VERSION}+${API_VERSION}' ."
             }
         }
         stage('Publish') {
@@ -30,7 +31,7 @@ pipeline {
                     script {
                         VERSION=readFile('version.txt').trim()
                     }
-                    sh "docker push 'dtr.rogfk.no/fint-beta/consumer-felles-kodeverk:${VERSION}+${props.apiVersion}'"
+                    sh "docker push 'dtr.rogfk.no/fint-beta/consumer-felles-kodeverk:${VERSION}+${API_VERSION}'"
                 }
             }
         }
