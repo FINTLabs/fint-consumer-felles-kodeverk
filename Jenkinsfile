@@ -13,11 +13,10 @@ pipeline {
             steps {
                 unstash 'version'
                 script {
-                    VERSION=readFile('version.txt').trim()
                     props=readProperties file: 'gradle.properties'
-                    API_VERSION=props.apiVersion
+                    VERSION=readFile('version.txt').trim().replaceFirst('-', '-' + props.apiVersion + '-')
                 }
-                sh "docker build -t 'dtr.rogfk.no/fint-beta/consumer-felles-kodeverk:${VERSION}+${API_VERSION}' ."
+                sh "docker build -t 'dtr.rogfk.no/fint-beta/consumer-felles-kodeverk:${VERSION}' ."
             }
         }
         stage('Publish') {
@@ -27,11 +26,7 @@ pipeline {
             }
             steps {
                 withDockerRegistry([credentialsId: 'dtr-rogfk-no', url: 'https://dtr.rogfk.no']) {
-                    unstash 'version'
-                    script {
-                        VERSION=readFile('version.txt').trim()
-                    }
-                    sh "docker push 'dtr.rogfk.no/fint-beta/consumer-felles-kodeverk:${VERSION}+${API_VERSION}'"
+                    sh "docker push 'dtr.rogfk.no/fint-beta/consumer-felles-kodeverk:${VERSION}'"
                 }
             }
         }

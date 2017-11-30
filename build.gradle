@@ -25,7 +25,7 @@ apply plugin: 'jacoco'
 
 apply from: 'https://raw.githubusercontent.com/FINTlibs/fint-buildscripts/v1.1.0/version.gradle'
 // apiVersion is defined in gradle.properties
-version = createVersion() + "+${apiVersion}"
+version = createVersion().replaceFirst('-', "-${apiVersion}-")
 
 jar {
     baseName = 'fint-consumer-felles-kodeverk'
