@@ -67,6 +67,9 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
+jar {
+    baseName = 'fint-consumer-felles-kodeverk'
+}
 task wrapper(type: Wrapper) {
     gradleVersion = gradleVersion
 }
