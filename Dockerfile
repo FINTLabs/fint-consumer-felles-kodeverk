@@ -3,6 +3,7 @@ USER root
 COPY . .
 ARG apiVersion
 RUN gradle --no-daemon -PapiVersion=${apiVersion} build
+RUN ls -l build/libs
 
 FROM openjdk:8-jre-alpine
 COPY --from=builder /home/gradle/build/libs/fint-consumer-felles-kodeverk-*.jar /data/app.jar
