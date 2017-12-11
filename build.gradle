@@ -79,8 +79,8 @@ jar {
         attributes(
             "Manifest-Version": "1.0",
             "Main-Class": "no.fint.consumer.Application",
-            "Specification-Version": ${apiVersion},
-            "Implementation-Version": ${version},
+            "Specification-Version": "${apiVersion}",
+            "Implementation-Version": "${version}",
             "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
         )
     }
