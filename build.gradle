@@ -66,12 +66,20 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-task copyDependencies(type: Copy) {
+task copyExternalDependencies(type: Copy) {
    from configurations.compile
-   into "$buildDir/deps"
+    into "$buildDir/deps/external"
+    exclude '**/fint-*.jar'
 }
 
-build.dependsOn(copyDependencies)
+task copyFintDependencies(type: Copy) {
+    from configurations.compile
+    into "$buildDir/deps/fint"
+    include '**/fint-*.jar'
+}
+
+build.dependsOn(copyExternalDependencies)
+build.dependsOn(copyFintDependencies)
 
 jar {
     baseName = 'fint-consumer-felles-kodeverk'
