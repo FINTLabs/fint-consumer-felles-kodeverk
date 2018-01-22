@@ -8,6 +8,7 @@ import no.fint.consumer.config.Constants;
 import no.fint.consumer.config.ConsumerProps;
 import no.fint.consumer.event.ConsumerEventUtil;
 import no.fint.event.model.Event;
+import no.fint.model.felles.kompleksedatatyper.Identifikator;
 import no.fint.model.relation.FintResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -59,7 +60,9 @@ public class FylkeCacheService extends CacheService<FintResource<Fylke>> {
     }
 
     public Optional<FintResource<Fylke>> getFylke(String orgId, String SystemId) {
-        return getOne(orgId, (fintResource) -> fintResource.getResource().getSystemId().getIdentifikatorverdi().equals(SystemId));
+        Identifikator needle = new Identifikator();
+        needle.setIdentifikatorverdi(SystemId);
+        return getOne(orgId, (fintResource) -> needle.equals(fintResource.getResource().getSystemId()));
     }
 
 	@Override
