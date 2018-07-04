@@ -1,8 +1,7 @@
 pipeline {
-    agent none
+    agent { label 'docker' }
     stages {
         stage('Build') {
-            agent { label 'docker' }
             steps {
                 script {
                     props=readProperties file: 'gradle.properties'
@@ -12,7 +11,6 @@ pipeline {
             }
         }
         stage('Publish') {
-            agent { label 'docker' }
             when {
                 branch 'master'
             }
