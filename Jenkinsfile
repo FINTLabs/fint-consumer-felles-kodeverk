@@ -15,7 +15,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                withDockerRegistry([credentialsId: 'dtr-rogfk-no', url: 'https://dtr.fintlabs.no']) {
+                withDockerRegistry([credentialsId: 'dtr-fintlabs-no', url: 'https://dtr.fintlabs.no']) {
                     sh "docker push 'dtr.fintlabs.no/fint-beta/consumer-felles-kodeverk:${VERSION}'"
                 }
             }
