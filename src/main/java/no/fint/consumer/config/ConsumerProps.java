@@ -19,6 +19,6 @@ public class ConsumerProps {
 	public static final String CACHE_INITIALDELAY_SPRAK = "${fint.consumer.cache.initialDelay.sprak:90000}";
 
 
-    private String[] orgs = { "fint.health", Constants.ORG_ID };
+    private String[] orgs = { "health.fintlabs.no", Constants.ORG_ID };
 
 }

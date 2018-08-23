@@ -7,7 +7,7 @@ pipeline {
                     props=readProperties file: 'gradle.properties'
                     VERSION="${props.version}-${props.apiVersion}"
                 }
-                sh "docker build --tag 'dtr.rogfk.no/fint-beta/consumer-felles-kodeverk:${VERSION}' --build-arg apiVersion=${props.apiVersion} ."
+                sh "docker build --tag 'dtr.fintlabs.no/fint-beta/consumer-felles-kodeverk:${VERSION}' --build-arg apiVersion=${props.apiVersion} ."
             }
         }
         stage('Publish') {
@@ -15,8 +15,8 @@ pipeline {
                 branch 'master'
             }
             steps {
-                withDockerRegistry([credentialsId: 'dtr-rogfk-no', url: 'https://dtr.rogfk.no']) {
-                    sh "docker push 'dtr.rogfk.no/fint-beta/consumer-felles-kodeverk:${VERSION}'"
+                withDockerRegistry([credentialsId: 'dtr-rogfk-no', url: 'https://dtr.fintlabs.no']) {
+                    sh "docker push 'dtr.fintlabs.no/fint-beta/consumer-felles-kodeverk:${VERSION}'"
                 }
             }
         }
