@@ -14,18 +14,32 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh "docker tag ${GIT_COMMIT} dtr.fintlabs.no/beta/felles-kodeverk:latest"
+                sh "docker tag ${GIT_COMMIT} dtr.fintlabs.no/beta/felles-kodeverk:latest.${BUILD_NUMBER}"
                 withDockerRegistry([credentialsId: 'dtr-fintlabs-no', url: 'https://dtr.fintlabs.no']) {
-                    sh "docker push 'dtr.fintlabs.no/beta/felles-kodeverk:latest'"
+                    sh "docker push dtr.fintlabs.no/beta/felles-kodeverk:build.${BUILD_NUMBER}"
+                }
+            }
+        }
+        stage('Publish Version') {
+            when {
+                tag pattern: "v\\d+\\.\\d+\\.\\d+(-\\w+-\\d+)?", comparator: "REGEXP"
+            }
+            steps {
+                script {
+                    VERSION = TAG_NAME[1..-1]
+                }
+                sh "docker tag ${GIT_COMMIT} dtr.fintlabs.no/beta/felles-kodeverk:${VERSION}"
+                withDockerRegistry([credentialsId: 'dtr-fintlabs-no', url: 'https://dtr.fintlabs.no']) {
+                    sh "docker push dtr.fintlabs.no/beta/felles-kodeverk:${VERSION}"
                 }
             }
         }
         stage('Publish PR') {
             when { changeRequest() }
             steps {
-                sh "docker tag ${GIT_COMMIT} dtr.fintlabs.no/beta/felles-kodeverk:${BRANCH_NAME}"
+                sh "docker tag ${GIT_COMMIT} dtr.fintlabs.no/beta/felles-kodeverk:${BRANCH_NAME}.${BUILD_NUMBER}"
                 withDockerRegistry([credentialsId: 'dtr-fintlabs-no', url: 'https://dtr.fintlabs.no']) {
-                    sh "docker push 'dtr.fintlabs.no/beta/felles-kodeverk:${BRANCH_NAME}'"
+                    sh "docker push dtr.fintlabs.no/beta/felles-kodeverk:${BRANCH_NAME}.${BUILD_NUMBER}"
                 }
             }
         }
