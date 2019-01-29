@@ -85,7 +85,6 @@ build.dependsOn(copyExternalDependencies)
 build.dependsOn(copyFintDependencies)
 
 jar {
-    baseName = 'fint-consumer-felles-kodeverk'
     manifest {
         attributes(
             "Manifest-Version": "1.0",
@@ -95,10 +94,6 @@ jar {
             "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
         )
     }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = gradleVersion
 }
 
 bootRepackage.enabled = false
