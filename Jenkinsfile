@@ -14,7 +14,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh "docker tag ${GIT_COMMIT} dtr.fintlabs.no/beta/consumer-felles-kodeverk:latest.${BUILD_NUMBER}"
+                sh "docker tag ${GIT_COMMIT} dtr.fintlabs.no/beta/consumer-felles-kodeverk:build.${BUILD_NUMBER}"
                 withDockerRegistry([credentialsId: 'dtr-fintlabs-no', url: 'https://dtr.fintlabs.no']) {
                     sh "docker push dtr.fintlabs.no/beta/consumer-felles-kodeverk:build.${BUILD_NUMBER}"
                 }
