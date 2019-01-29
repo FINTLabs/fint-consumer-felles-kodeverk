@@ -46,7 +46,7 @@ repositories {
 
 dependencies {
     compile('no.fint:fint-event-model:2.0.0')
-    compile('no.fint:fint-felles-model-java:2.2.0')
+    compile("no.fint:fint-felles-model-java:${apiVersion}")
     compile('no.fint:fint-relations:1.2.0-1')
     compile('no.fint:fint-events:1.0.1')
     compile('no.fint:fint-audit-mongo-plugin:1.1.1')
