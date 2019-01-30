@@ -1,4 +1,4 @@
-package no.fint.consumer.models.fylke;
+package no.fint.consumer.models.iso.landkode;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,15 +24,15 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
-import no.fint.model.felles.kodeverk.Fylke;
-import no.fint.model.resource.felles.kodeverk.FylkeResource;
-import no.fint.model.felles.kodeverk.KodeverkActions;
+import no.fint.model.felles.kodeverk.iso.Landkode;
+import no.fint.model.resource.felles.kodeverk.iso.LandkodeResource;
+import no.fint.model.felles.kodeverk.iso.IsoActions;
 
 @Slf4j
 @Service
-public class FylkeCacheService extends CacheService<FylkeResource> {
+public class LandkodeCacheService extends CacheService<LandkodeResource> {
 
-    public static final String MODEL = Fylke.class.getSimpleName().toLowerCase();
+    public static final String MODEL = Landkode.class.getSimpleName().toLowerCase();
 
     @Value("${fint.consumer.compatibility.fintresource:true}")
     private boolean checkFintResourceCompatibility;
@@ -47,16 +47,16 @@ public class FylkeCacheService extends CacheService<FylkeResource> {
     private ConsumerProps props;
 
     @Autowired
-    private FylkeLinker linker;
+    private LandkodeLinker linker;
 
     private JavaType javaType;
 
     private ObjectMapper objectMapper;
 
-    public FylkeCacheService() {
-        super(MODEL, KodeverkActions.GET_ALL_FYLKE, KodeverkActions.UPDATE_FYLKE);
+    public LandkodeCacheService() {
+        super(MODEL, IsoActions.GET_ALL_LANDKODE, IsoActions.UPDATE_LANDKODE);
         objectMapper = new ObjectMapper();
-        javaType = objectMapper.getTypeFactory().constructCollectionType(List.class, FylkeResource.class);
+        javaType = objectMapper.getTypeFactory().constructCollectionType(List.class, LandkodeResource.class);
         objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
     }
 
@@ -65,7 +65,7 @@ public class FylkeCacheService extends CacheService<FylkeResource> {
         props.getAssets().forEach(this::createCache);
     }
 
-    @Scheduled(initialDelayString = Constants.CACHE_INITIALDELAY_FYLKE, fixedRateString = Constants.CACHE_FIXEDRATE_FYLKE)
+    @Scheduled(initialDelayString = Constants.CACHE_INITIALDELAY_LANDKODE, fixedRateString = Constants.CACHE_FIXEDRATE_LANDKODE)
     public void populateCacheAll() {
         props.getAssets().forEach(this::populateCache);
     }
@@ -76,16 +76,16 @@ public class FylkeCacheService extends CacheService<FylkeResource> {
 	}
 
     private void populateCache(String orgId) {
-		log.info("Populating Fylke cache for {}", orgId);
-        Event event = new Event(orgId, Constants.COMPONENT, KodeverkActions.GET_ALL_FYLKE, Constants.CACHE_SERVICE);
+		log.info("Populating Landkode cache for {}", orgId);
+        Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_ALL_LANDKODE, Constants.CACHE_SERVICE);
         consumerEventUtil.send(event);
     }
 
 
-    public Optional<FylkeResource> getFylkeBySystemId(String orgId, String systemId) {
+    public Optional<LandkodeResource> getLandkodeBySystemId(String orgId, String systemId) {
         return getOne(orgId, (resource) -> Optional
                 .ofNullable(resource)
-                .map(FylkeResource::getSystemId)
+                .map(LandkodeResource::getSystemId)
                 .map(Identifikator::getIdentifikatorverdi)
                 .map(_id -> _id.equals(systemId))
                 .orElse(false));
@@ -94,15 +94,15 @@ public class FylkeCacheService extends CacheService<FylkeResource> {
 
 	@Override
     public void onAction(Event event) {
-        List<FylkeResource> data;
+        List<LandkodeResource> data;
         if (checkFintResourceCompatibility && fintResourceCompatibility.isFintResourceData(event.getData())) {
-            log.info("Compatibility: Converting FintResource<FylkeResource> to FylkeResource ...");
-            data = fintResourceCompatibility.convertResourceData(event.getData(), FylkeResource.class);
+            log.info("Compatibility: Converting FintResource<LandkodeResource> to LandkodeResource ...");
+            data = fintResourceCompatibility.convertResourceData(event.getData(), LandkodeResource.class);
         } else {
             data = objectMapper.convertValue(event.getData(), javaType);
         }
         data.forEach(linker::mapLinks);
-        if (KodeverkActions.valueOf(event.getAction()) == KodeverkActions.UPDATE_FYLKE) {
+        if (IsoActions.valueOf(event.getAction()) == IsoActions.UPDATE_LANDKODE) {
             if (event.getResponseStatus() == ResponseStatus.ACCEPTED || event.getResponseStatus() == ResponseStatus.CONFLICT) {
                 add(event.getOrgId(), data);
                 log.info("Added {} elements to cache for {}", data.size(), event.getOrgId());

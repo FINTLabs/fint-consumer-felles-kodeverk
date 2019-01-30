@@ -1,4 +1,4 @@
-package no.fint.consumer.models.fylke;
+package no.fint.consumer.models.iso.kjonn;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,15 +24,15 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
-import no.fint.model.felles.kodeverk.Fylke;
-import no.fint.model.resource.felles.kodeverk.FylkeResource;
-import no.fint.model.felles.kodeverk.KodeverkActions;
+import no.fint.model.felles.kodeverk.iso.Kjonn;
+import no.fint.model.resource.felles.kodeverk.iso.KjonnResource;
+import no.fint.model.felles.kodeverk.iso.IsoActions;
 
 @Slf4j
 @Service
-public class FylkeCacheService extends CacheService<FylkeResource> {
+public class KjonnCacheService extends CacheService<KjonnResource> {
 
-    public static final String MODEL = Fylke.class.getSimpleName().toLowerCase();
+    public static final String MODEL = Kjonn.class.getSimpleName().toLowerCase();
 
     @Value("${fint.consumer.compatibility.fintresource:true}")
     private boolean checkFintResourceCompatibility;
@@ -47,16 +47,16 @@ public class FylkeCacheService extends CacheService<FylkeResource> {
     private ConsumerProps props;
 
     @Autowired
-    private FylkeLinker linker;
+    private KjonnLinker linker;
 
     private JavaType javaType;
 
     private ObjectMapper objectMapper;
 
-    public FylkeCacheService() {
-        super(MODEL, KodeverkActions.GET_ALL_FYLKE, KodeverkActions.UPDATE_FYLKE);
+    public KjonnCacheService() {
+        super(MODEL, IsoActions.GET_ALL_KJONN, IsoActions.UPDATE_KJONN);
         objectMapper = new ObjectMapper();
-        javaType = objectMapper.getTypeFactory().constructCollectionType(List.class, FylkeResource.class);
+        javaType = objectMapper.getTypeFactory().constructCollectionType(List.class, KjonnResource.class);
         objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
     }
 
@@ -65,7 +65,7 @@ public class FylkeCacheService extends CacheService<FylkeResource> {
         props.getAssets().forEach(this::createCache);
     }
 
-    @Scheduled(initialDelayString = Constants.CACHE_INITIALDELAY_FYLKE, fixedRateString = Constants.CACHE_FIXEDRATE_FYLKE)
+    @Scheduled(initialDelayString = Constants.CACHE_INITIALDELAY_KJONN, fixedRateString = Constants.CACHE_FIXEDRATE_KJONN)
     public void populateCacheAll() {
         props.getAssets().forEach(this::populateCache);
     }
@@ -76,16 +76,16 @@ public class FylkeCacheService extends CacheService<FylkeResource> {
 	}
 
     private void populateCache(String orgId) {
-		log.info("Populating Fylke cache for {}", orgId);
-        Event event = new Event(orgId, Constants.COMPONENT, KodeverkActions.GET_ALL_FYLKE, Constants.CACHE_SERVICE);
+		log.info("Populating Kjonn cache for {}", orgId);
+        Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_ALL_KJONN, Constants.CACHE_SERVICE);
         consumerEventUtil.send(event);
     }
 
 
-    public Optional<FylkeResource> getFylkeBySystemId(String orgId, String systemId) {
+    public Optional<KjonnResource> getKjonnBySystemId(String orgId, String systemId) {
         return getOne(orgId, (resource) -> Optional
                 .ofNullable(resource)
-                .map(FylkeResource::getSystemId)
+                .map(KjonnResource::getSystemId)
                 .map(Identifikator::getIdentifikatorverdi)
                 .map(_id -> _id.equals(systemId))
                 .orElse(false));
@@ -94,15 +94,15 @@ public class FylkeCacheService extends CacheService<FylkeResource> {
 
 	@Override
     public void onAction(Event event) {
-        List<FylkeResource> data;
+        List<KjonnResource> data;
         if (checkFintResourceCompatibility && fintResourceCompatibility.isFintResourceData(event.getData())) {
-            log.info("Compatibility: Converting FintResource<FylkeResource> to FylkeResource ...");
-            data = fintResourceCompatibility.convertResourceData(event.getData(), FylkeResource.class);
+            log.info("Compatibility: Converting FintResource<KjonnResource> to KjonnResource ...");
+            data = fintResourceCompatibility.convertResourceData(event.getData(), KjonnResource.class);
         } else {
             data = objectMapper.convertValue(event.getData(), javaType);
         }
         data.forEach(linker::mapLinks);
-        if (KodeverkActions.valueOf(event.getAction()) == KodeverkActions.UPDATE_FYLKE) {
+        if (IsoActions.valueOf(event.getAction()) == IsoActions.UPDATE_KJONN) {
             if (event.getResponseStatus() == ResponseStatus.ACCEPTED || event.getResponseStatus() == ResponseStatus.CONFLICT) {
                 add(event.getOrgId(), data);
                 log.info("Added {} elements to cache for {}", data.size(), event.getOrgId());

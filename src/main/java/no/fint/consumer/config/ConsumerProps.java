@@ -1,24 +1,37 @@
 package no.fint.consumer.config;
 
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Component
 public class ConsumerProps {
 
-	public static final String CACHE_FIXEDRATE_FYLKE = "${fint.consumer.cache.fixedRate.fylke:900000}";
-	public static final String CACHE_FIXEDRATE_KJONN = "${fint.consumer.cache.fixedRate.kjonn:900000}";
-	public static final String CACHE_FIXEDRATE_KOMMUNE = "${fint.consumer.cache.fixedRate.kommune:900000}";
-	public static final String CACHE_FIXEDRATE_LANDKODE = "${fint.consumer.cache.fixedRate.landkode:900000}";
-	public static final String CACHE_FIXEDRATE_SPRAK = "${fint.consumer.cache.fixedRate.sprak:900000}";
-	public static final String CACHE_INITIALDELAY_FYLKE = "${fint.consumer.cache.initialDelay.fylke:50000}";
-	public static final String CACHE_INITIALDELAY_KJONN = "${fint.consumer.cache.initialDelay.kjonn:60000}";
-	public static final String CACHE_INITIALDELAY_KOMMUNE = "${fint.consumer.cache.initialDelay.kommune:70000}";
-	public static final String CACHE_INITIALDELAY_LANDKODE = "${fint.consumer.cache.initialDelay.landkode:80000}";
-	public static final String CACHE_INITIALDELAY_SPRAK = "${fint.consumer.cache.initialDelay.sprak:90000}";
+    @Value("${fint.consumer.override-org-id:false}")
+    private boolean overrideOrgId;
 
+    @Value("${fint.consumer.default-client:FINT}")
+    private String defaultClient;
 
-    private String[] orgs = { "health.fintlabs.no", Constants.ORG_ID };
+    @Value("${fint.consumer.default-org-id:fint.no}")
+    private String defaultOrgId;
+
+    private Set<String> assets;
+
+    @Autowired
+    private void setupOrgs(@Value("${fint.events.orgIds:}") String[] orgs) {
+        assets = new HashSet<>(Arrays.asList(orgs));
+    }
+
+    public String[] getOrgs() {
+        return assets.toArray(new String[0]);
+    }
 
 }
+

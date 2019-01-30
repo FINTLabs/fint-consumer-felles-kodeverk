@@ -1,4 +1,4 @@
-package no.fint.consumer.models.fylke;
+package no.fint.consumer.models.iso.kjonn;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -35,25 +35,25 @@ import java.util.Optional;
 
 import javax.naming.NameNotFoundException;
 
-import no.fint.model.resource.felles.kodeverk.FylkeResource;
-import no.fint.model.resource.felles.kodeverk.FylkeResources;
-import no.fint.model.felles.kodeverk.KodeverkActions;
+import no.fint.model.resource.felles.kodeverk.iso.KjonnResource;
+import no.fint.model.resource.felles.kodeverk.iso.KjonnResources;
+import no.fint.model.felles.kodeverk.iso.IsoActions;
 
 @Slf4j
-@Api(tags = {"Fylke"})
+@Api(tags = {"Kjonn"})
 @CrossOrigin
 @RestController
-@RequestMapping(name = "Fylke", value = RestEndpoints.FYLKE, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-public class FylkeController {
+@RequestMapping(name = "Kjonn", value = RestEndpoints.KJONN, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+public class KjonnController {
 
     @Autowired
-    private FylkeCacheService cacheService;
+    private KjonnCacheService cacheService;
 
     @Autowired
     private FintAuditService fintAuditService;
 
     @Autowired
-    private FylkeLinker linker;
+    private KjonnLinker linker;
 
     @Autowired
     private ConsumerProps props;
@@ -93,7 +93,7 @@ public class FylkeController {
     }
 
     @GetMapping
-    public FylkeResources getFylke(
+    public KjonnResources getKjonn(
             @RequestHeader(name = HeaderConstants.ORG_ID, required = false) String orgId,
             @RequestHeader(name = HeaderConstants.CLIENT, required = false) String client,
             @RequestParam(required = false) Long sinceTimeStamp) {
@@ -105,26 +105,26 @@ public class FylkeController {
         }
         log.debug("OrgId: {}, Client: {}", orgId, client);
 
-        Event event = new Event(orgId, Constants.COMPONENT, KodeverkActions.GET_ALL_FYLKE, client);
+        Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_ALL_KJONN, client);
         fintAuditService.audit(event);
 
         fintAuditService.audit(event, Status.CACHE);
 
-        List<FylkeResource> fylke;
+        List<KjonnResource> kjonn;
         if (sinceTimeStamp == null) {
-            fylke = cacheService.getAll(orgId);
+            kjonn = cacheService.getAll(orgId);
         } else {
-            fylke = cacheService.getAll(orgId, sinceTimeStamp);
+            kjonn = cacheService.getAll(orgId, sinceTimeStamp);
         }
 
         fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
 
-        return linker.toResources(fylke);
+        return linker.toResources(kjonn);
     }
 
 
     @GetMapping("/systemid/{id:.+}")
-    public FylkeResource getFylkeBySystemId(
+    public KjonnResource getKjonnBySystemId(
             @PathVariable String id,
             @RequestHeader(name = HeaderConstants.ORG_ID, required = false) String orgId,
             @RequestHeader(name = HeaderConstants.CLIENT, required = false) String client) {
@@ -136,17 +136,17 @@ public class FylkeController {
         }
         log.debug("SystemId: {}, OrgId: {}, Client: {}", id, orgId, client);
 
-        Event event = new Event(orgId, Constants.COMPONENT, KodeverkActions.GET_FYLKE, client);
+        Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_KJONN, client);
         event.setQuery("systemid/" + id);
         fintAuditService.audit(event);
 
         fintAuditService.audit(event, Status.CACHE);
 
-        Optional<FylkeResource> fylke = cacheService.getFylkeBySystemId(orgId, id);
+        Optional<KjonnResource> kjonn = cacheService.getKjonnBySystemId(orgId, id);
 
         fintAuditService.audit(event, Status.CACHE_RESPONSE, Status.SENT_TO_CLIENT);
 
-        return fylke.map(linker::toResource).orElseThrow(() -> new EntityNotFoundException(id));
+        return kjonn.map(linker::toResource).orElseThrow(() -> new EntityNotFoundException(id));
     }
 
 

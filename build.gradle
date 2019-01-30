@@ -1,5 +1,5 @@
 buildscript {
-    apply from: 'https://raw.githubusercontent.com/FINTlibs/fint-buildscripts/v1.3.0/dependencies.gradle'
+    apply from: 'https://raw.githubusercontent.com/FINTlibs/fint-buildscripts/v1.4.0/dependencies.gradle'
     ext {
         springBootVersion = springBootVersion
     }
@@ -24,16 +24,6 @@ apply plugin: 'maven'
 apply plugin: 'jacoco'
 
 version = "${version}-${apiVersion}"
-sourceCompatibility = 1.8
-
-import org.apache.tools.ant.filters.ReplaceTokens
-afterEvaluate {
-    configure(processResources) {
-        filesMatching('**/*.yml') {
-            filter(ReplaceTokens, tokens: [version: jar.version])
-        }
-    }
-}
 
 repositories {
     mavenLocal()
@@ -44,23 +34,23 @@ repositories {
 }
 
 dependencies {
-    compile("no.fint:fint-felles-model-java:${apiVersion}")
 
-    compile('no.fint:fint-event-model:2.0.1')
-    compile('no.fint:fint-relations:1.2.1')
-    compile('no.fint:fint-cache:2.0.1-rc-3')
-    compile('no.fint:fint-events:2.1.0-rc-1')
+    compile("no.fint:fint-felles-resource-model-java:${apiVersion}")
+
+    compile('no.fint:fint-event-model:3.0.0')
+    compile('no.fint:fint-relations:2.0.0')
+    compile('no.fint:fint-events:2.2.0-rc-1')
     compile('no.fint:fint-audit-mongo-plugin:1.4.1')
+    compile('no.fint:fint-cache:2.0.1')
     compile('no.fint:fint-dependencies:0.0.3')
-    
+    compile('no.fint:fint-spring-secrets:0.1.0')
+
     compile('org.projectlombok:lombok')
     compile("com.github.springfox.loader:springfox-loader:${springfoxLoaderVersion}")
 
-    compile('io.micrometer:micrometer-registry-prometheus:0.12.0.RELEASE')
-    compile('io.micrometer:micrometer-spring-legacy:0.12.0.RELEASE')
-    compile('org.springframework.boot:spring-boot-actuator')
     compile('org.springframework.boot:spring-boot-starter-web')
     runtime('org.springframework.boot:spring-boot-devtools')
+    runtime('org.springframework.boot:spring-boot-starter-actuator')
 
     testCompile('no.fint:fint-test-utils:0.0.4')
     testCompile("cglib:cglib-nodep:${cglibVersion}")
@@ -70,13 +60,13 @@ dependencies {
 }
 
 task copyExternalDependencies(type: Copy) {
-    from configurations.compile
+    from configurations.runtime
     into "$buildDir/deps/external"
     exclude '**/fint-*.jar'
 }
 
 task copyFintDependencies(type: Copy) {
-    from configurations.compile
+    from configurations.runtime
     into "$buildDir/deps/fint"
     include '**/fint-*.jar'
 }
@@ -87,13 +77,28 @@ build.dependsOn(copyFintDependencies)
 jar {
     manifest {
         attributes(
-            "Manifest-Version": "1.0",
-            "Main-Class": "no.fint.consumer.Application",
-            "Specification-Version": "${apiVersion}",
-            "Implementation-Version": "${version}",
-            "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
+                "Manifest-Version": "1.0",
+                "Main-Class": "no.fint.consumer.Application",
+                "Specification-Version": "${apiVersion}",
+                "Implementation-Version": "${version}",
+                "Class-Path": configurations.runtime.collect { it.getName() }.join(' ')
         )
     }
+}
+
+sourceCompatibility = 1.8
+
+import org.apache.tools.ant.filters.ReplaceTokens
+afterEvaluate {
+    configure(processResources) {
+        filesMatching('**/*.yml') {
+            filter(ReplaceTokens, tokens: [version: jar.version, title: jar.baseName])
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = gradleVersion
 }
 
 bootRepackage.enabled = false
@@ -114,4 +119,4 @@ jacocoTestReport {
     }
 }
 
-apply from: 'https://raw.githubusercontent.com/FINTlibs/fint-buildscripts/v1.3.0/dependencyReport.gradle'
+apply from: 'https://raw.githubusercontent.com/FINTlibs/fint-buildscripts/v1.4.0/dependencyReport.gradle'

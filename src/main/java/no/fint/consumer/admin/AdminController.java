@@ -1,6 +1,9 @@
 package no.fint.consumer.admin;
 
+import no.fint.cache.CacheManager;
+import no.fint.cache.utils.CacheUri;
 import no.fint.consumer.config.Constants;
+import no.fint.consumer.config.ConsumerProps;
 import no.fint.consumer.event.ConsumerEventUtil;
 import no.fint.consumer.utils.RestEndpoints;
 import no.fint.event.model.DefaultActions;
@@ -12,12 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = RestEndpoints.ADMIN, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -25,6 +27,12 @@ public class AdminController {
 
     @Autowired
     private ConsumerEventUtil consumerEventUtil;
+
+    @Autowired
+    private CacheManager<?> cacheManager;
+
+    @Autowired
+    private ConsumerProps props;
 
     @GetMapping("/health")
     public ResponseEntity healthCheck(@RequestHeader(HeaderConstants.ORG_ID) String orgId,
@@ -41,5 +49,20 @@ public class AdminController {
             event.setMessage("No response from adapter");
             return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(event);
         }
+    }
+
+    @GetMapping("/organisations")
+    public Collection<String> getOrganisations() {
+        return cacheManager.getKeys();
+    }
+
+    @GetMapping("/organisations/{orgId:.+}")
+    public Collection<String> getOrganization(@PathVariable String orgId) {
+        return cacheManager.getKeys().stream().filter(key -> CacheUri.containsOrgId(key, orgId)).collect(Collectors.toList());
+    }
+
+    @GetMapping("/assets")
+    public Collection<String> getAssets() {
+        return props.getAssets();
     }
 }

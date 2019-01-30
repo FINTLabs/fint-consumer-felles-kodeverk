@@ -1,7 +1,3 @@
 springfox:
- title: 'FINT Consumer Felles Kodeverk'
- version: '@version@'
- 
-fint:
-  consumer:
-    cache-manager: hazelcast
+  title: '@title@'
+  version: '@version@'
