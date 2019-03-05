@@ -48,6 +48,8 @@ spec:
                 secretKeyRef: {key: mongodb, name: fint-audit}
             - {name: fint.cache.manager, value: default}
             - {name: fint.events.orgIds, value: health.fintlabs.no}
+            - {name: fint.consumer.default-org-id, value: fintlabs.no}
+            - {name: fint.consumer.override-org-id, value: 'true'}
             - {name: fint.hazelcast.kubernetes.enabled, value: 'true'}
             - {name: fint.hazelcast.kubernetes.namespace, value: default}
             - {name: fint.hazelcast.kubernetes.labelName, value: fint.stack}
