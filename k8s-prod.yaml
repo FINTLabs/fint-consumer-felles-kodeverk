@@ -42,21 +42,19 @@ spec:
         - env:
             - {name: TZ, value: Europe/Oslo}
             - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx2G -verbose:gc'}
-            - {name: fint.audit.mongo.databasename, value: fint-audit-beta}
+            - {name: fint.audit.mongo.databasename, value: fint-audit}
             - name: fint.audit.mongo.connection-string
               valueFrom:
                 secretKeyRef: {key: mongodb, name: fint-audit}
             - {name: fint.cache.manager, value: default}
             - {name: fint.events.orgIds, value: health.fintlabs.no}
-            - {name: fint.consumer.default-org-id, value: fintlabs.no}
-            - {name: fint.consumer.override-org-id, value: 'true'}
             - {name: fint.hazelcast.kubernetes.enabled, value: 'true'}
             - {name: fint.hazelcast.kubernetes.namespace, value: default}
             - {name: fint.hazelcast.kubernetes.labelName, value: fint.stack}
             - {name: fint.hazelcast.kubernetes.labelValue, value: felles-kodeverk}
-            - {name: fint.relations.default-base-url, value: 'https://beta.felleskomponent.no'}
+            - {name: fint.relations.default-base-url, value: 'https://api.felleskomponent.no'}
             - {name: server.context-path, value: /felles/kodeverk}
-          image: fintlabs.azurecr.io/consumer-felles-kodeverk:build.2
+          image: fintlabs.azurecr.io/consumer-felles-kodeverk:1.1.0
           name: consumer-felles-kodeverk
           ports:
             - {containerPort: 8080}
@@ -89,7 +87,7 @@ spec:
         - env:
             - {name: TZ, value: Europe/Oslo}
             - {name: JAVA_TOOL_OPTIONS, value: '-XX:+ExitOnOutOfMemoryError -Xmx2G -verbose:gc'}
-            - {name: fint.audit.mongo.databasename, value: fint-audit-beta}
+            - {name: fint.audit.mongo.databasename, value: fint-audit}
             - name: fint.audit.mongo.connection-string
               valueFrom:
                 secretKeyRef: {key: mongodb, name: fint-audit}
