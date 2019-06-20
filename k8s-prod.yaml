@@ -56,7 +56,7 @@ spec:
             - {name: fint.hazelcast.kubernetes.labelValue, value: felles-kodeverk}
             - {name: fint.relations.default-base-url, value: 'https://api.felleskomponent.no'}
             - {name: server.context-path, value: /felles/kodeverk}
-          image: fintlabs.azurecr.io/consumer-felles-kodeverk:1.1.0
+          image: fintlabs.azurecr.io/consumer-felles-kodeverk:1.2.0
           name: consumer-felles-kodeverk
           ports:
             - {containerPort: 8080}
