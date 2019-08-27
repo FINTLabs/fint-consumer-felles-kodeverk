@@ -75,7 +75,8 @@ public class FylkeCacheService extends CacheService<FylkeResource> {
 		populateCache(orgId);
 	}
 
-    private void populateCache(String orgId) {
+    @Override
+    public void populateCache(String orgId) {
 		log.info("Populating Fylke cache for {}", orgId);
         Event event = new Event(orgId, Constants.COMPONENT, KodeverkActions.GET_ALL_FYLKE, Constants.CACHE_SERVICE);
         consumerEventUtil.send(event);

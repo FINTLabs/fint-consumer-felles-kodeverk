@@ -75,7 +75,8 @@ public class LandkodeCacheService extends CacheService<LandkodeResource> {
 		populateCache(orgId);
 	}
 
-    private void populateCache(String orgId) {
+    @Override
+    public void populateCache(String orgId) {
 		log.info("Populating Landkode cache for {}", orgId);
         Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_ALL_LANDKODE, Constants.CACHE_SERVICE);
         consumerEventUtil.send(event);

@@ -75,7 +75,8 @@ public class KjonnCacheService extends CacheService<KjonnResource> {
 		populateCache(orgId);
 	}
 
-    private void populateCache(String orgId) {
+    @Override
+    public void populateCache(String orgId) {
 		log.info("Populating Kjonn cache for {}", orgId);
         Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_ALL_KJONN, Constants.CACHE_SERVICE);
         consumerEventUtil.send(event);

@@ -75,7 +75,8 @@ public class KommuneCacheService extends CacheService<KommuneResource> {
 		populateCache(orgId);
 	}
 
-    private void populateCache(String orgId) {
+    @Override
+    public void populateCache(String orgId) {
 		log.info("Populating Kommune cache for {}", orgId);
         Event event = new Event(orgId, Constants.COMPONENT, KodeverkActions.GET_ALL_KOMMUNE, Constants.CACHE_SERVICE);
         consumerEventUtil.send(event);

@@ -75,7 +75,8 @@ public class SprakCacheService extends CacheService<SprakResource> {
 		populateCache(orgId);
 	}
 
-    private void populateCache(String orgId) {
+    @Override
+    public void populateCache(String orgId) {
 		log.info("Populating Sprak cache for {}", orgId);
         Event event = new Event(orgId, Constants.COMPONENT, IsoActions.GET_ALL_SPRAK, Constants.CACHE_SERVICE);
         consumerEventUtil.send(event);
