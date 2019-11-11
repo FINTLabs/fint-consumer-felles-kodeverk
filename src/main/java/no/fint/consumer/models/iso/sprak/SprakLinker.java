@@ -7,6 +7,7 @@ import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.stream.IntStream;
 
 import static java.util.Objects.isNull;
 import static org.springframework.util.StringUtils.isEmpty;
@@ -39,6 +40,15 @@ public class SprakLinker extends FintLinker<SprakResource> {
         
         return null;
     }
-    
+
+    int[] hashCodes(SprakResource sprak) {
+        IntStream.Builder builder = IntStream.builder();
+        if (!isNull(sprak.getSystemId()) && !isEmpty(sprak.getSystemId().getIdentifikatorverdi())) {
+            builder.add(sprak.getSystemId().getIdentifikatorverdi().hashCode());
+        }
+        
+        return builder.build().toArray();
+    }
+
 }
 
