@@ -46,6 +46,9 @@ spec:
             - name: fint.audit.mongo.connection-string
               valueFrom:
                 secretKeyRef: {key: mongodb, name: fint-audit}
+            - {name: fint.audit.mongo.collection, value: auditEvents}
+            - {name: fint.audit.mongo.buffer-size, value: '125000'}
+            - {name: fint.audit.mongo.rate, value: '1000'}
             - {name: fint.cache.manager, value: default}
             - {name: fint.events.orgIds, value: health.fintlabs.no}
             - {name: fint.consumer.default-org-id, value: fintlabs.no}
@@ -56,7 +59,10 @@ spec:
             - {name: fint.hazelcast.kubernetes.labelValue, value: felles-kodeverk}
             - {name: fint.relations.default-base-url, value: 'https://api.felleskomponent.no'}
             - {name: server.context-path, value: /felles/kodeverk}
-          image: fintlabs.azurecr.io/consumer-felles-kodeverk:1.2.0
+            - {name: spring.mvc.logResolvedException,  value: 'false'}
+            - {name: endpoints.sensitive, value: 'false'}
+            - {name: management.security.enabled, value: 'false'}
+          image: fintlabs.azurecr.io/consumer-felles-kodeverk:3.3.0
           name: consumer-felles-kodeverk
           ports:
             - {containerPort: 8080}
@@ -93,15 +99,23 @@ spec:
             - name: fint.audit.mongo.connection-string
               valueFrom:
                 secretKeyRef: {key: mongodb, name: fint-audit}
+            - {name: fint.audit.mongo.collection, value: auditEvents}
+            - {name: fint.audit.mongo.buffer-size, value: '125000'}
+            - {name: fint.audit.mongo.rate, value: '1000'}
             - {name: fint.events.orgIds, value: health.fintlabs.no}
             - {name: fint.hazelcast.kubernetes.enabled, value: 'true'}
             - {name: fint.hazelcast.kubernetes.namespace, value: default}
             - {name: fint.hazelcast.kubernetes.labelName, value: fint.stack}
             - {name: fint.hazelcast.kubernetes.labelValue, value: felles-kodeverk}
             - {name: fint.provider.max-number-of-emitters, value: '5'}
-            - {name: server.context-path, value: /felles/kodeverk/provider}
             - {name: fint.provider.assets.endpoint, value: 'https://admin.fintlabs.no/api/components/assets/felles_kodeverk'}
-          image: fintlabs.azurecr.io/provider:2.1.0
+            - {name: server.context-path, value: /felles/kodeverk/provider}
+            - {name: spring.mvc.logResolvedException,  value: 'false'}
+            - {name: endpoints.sensitive, value: 'false'}
+            - {name: management.security.enabled, value: 'false'}
+            - {name: server.tomcat.max-threads, value: '400'}
+            - {name: server.tomcat.max-connections, value: '30000'}
+          image: fintlabs.azurecr.io/provider:2.2.0
           name: provider-felles-kodeverk
           ports:
             - {containerPort: 8080}
