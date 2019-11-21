@@ -7,6 +7,7 @@ import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.stream.IntStream;
 
 import static java.util.Objects.isNull;
 import static org.springframework.util.StringUtils.isEmpty;
@@ -39,6 +40,15 @@ public class KjonnLinker extends FintLinker<KjonnResource> {
         
         return null;
     }
-    
+
+    int[] hashCodes(KjonnResource kjonn) {
+        IntStream.Builder builder = IntStream.builder();
+        if (!isNull(kjonn.getSystemId()) && !isEmpty(kjonn.getSystemId().getIdentifikatorverdi())) {
+            builder.add(kjonn.getSystemId().getIdentifikatorverdi().hashCode());
+        }
+        
+        return builder.build().toArray();
+    }
+
 }
 
