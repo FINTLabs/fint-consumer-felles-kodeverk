@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
 import static org.springframework.util.StringUtils.isEmpty;
-
 
 @Component
 public class LandkodeLinker extends FintLinker<LandkodeResource> {
@@ -34,11 +34,17 @@ public class LandkodeLinker extends FintLinker<LandkodeResource> {
 
     @Override
     public String getSelfHref(LandkodeResource landkode) {
+        return getAllSelfHrefs(landkode).findFirst().orElse(null);
+    }
+
+    @Override
+    public Stream<String> getAllSelfHrefs(LandkodeResource landkode) {
+        Stream.Builder<String> builder = Stream.builder();
         if (!isNull(landkode.getSystemId()) && !isEmpty(landkode.getSystemId().getIdentifikatorverdi())) {
-            return createHrefWithId(landkode.getSystemId().getIdentifikatorverdi(), "systemid");
+            builder.add(createHrefWithId(landkode.getSystemId().getIdentifikatorverdi(), "systemid"));
         }
         
-        return null;
+        return builder.build();
     }
 
     int[] hashCodes(LandkodeResource landkode) {

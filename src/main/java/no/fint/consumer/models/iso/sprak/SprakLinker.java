@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
 import static org.springframework.util.StringUtils.isEmpty;
-
 
 @Component
 public class SprakLinker extends FintLinker<SprakResource> {
@@ -34,11 +34,17 @@ public class SprakLinker extends FintLinker<SprakResource> {
 
     @Override
     public String getSelfHref(SprakResource sprak) {
+        return getAllSelfHrefs(sprak).findFirst().orElse(null);
+    }
+
+    @Override
+    public Stream<String> getAllSelfHrefs(SprakResource sprak) {
+        Stream.Builder<String> builder = Stream.builder();
         if (!isNull(sprak.getSystemId()) && !isEmpty(sprak.getSystemId().getIdentifikatorverdi())) {
-            return createHrefWithId(sprak.getSystemId().getIdentifikatorverdi(), "systemid");
+            builder.add(createHrefWithId(sprak.getSystemId().getIdentifikatorverdi(), "systemid"));
         }
         
-        return null;
+        return builder.build();
     }
 
     int[] hashCodes(SprakResource sprak) {
