@@ -1,6 +1,5 @@
 package no.fint.consumer.models.fylke;
 
-import no.fint.model.resource.Link;
 import no.fint.model.resource.felles.kodeverk.FylkeResource;
 import no.fint.model.resource.felles.kodeverk.FylkeResources;
 import no.fint.relations.FintLinker;
@@ -26,9 +25,14 @@ public class FylkeLinker extends FintLinker<FylkeResource> {
 
     @Override
     public FylkeResources toResources(Collection<FylkeResource> collection) {
+        return toResources(collection.stream(), 0, 0, collection.size());
+    }
+
+    @Override
+    public FylkeResources toResources(Stream<FylkeResource> stream, int offset, int size, int totalItems) {
         FylkeResources resources = new FylkeResources();
-        collection.stream().map(this::toResource).forEach(resources::addResource);
-        resources.addSelf(Link.with(self()));
+        stream.map(this::toResource).forEach(resources::addResource);
+        addPagination(resources, offset, size, totalItems);
         return resources;
     }
 

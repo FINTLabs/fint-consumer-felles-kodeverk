@@ -1,6 +1,5 @@
 package no.fint.consumer.models.iso.landkode;
 
-import no.fint.model.resource.Link;
 import no.fint.model.resource.felles.kodeverk.iso.LandkodeResource;
 import no.fint.model.resource.felles.kodeverk.iso.LandkodeResources;
 import no.fint.relations.FintLinker;
@@ -26,9 +25,14 @@ public class LandkodeLinker extends FintLinker<LandkodeResource> {
 
     @Override
     public LandkodeResources toResources(Collection<LandkodeResource> collection) {
+        return toResources(collection.stream(), 0, 0, collection.size());
+    }
+
+    @Override
+    public LandkodeResources toResources(Stream<LandkodeResource> stream, int offset, int size, int totalItems) {
         LandkodeResources resources = new LandkodeResources();
-        collection.stream().map(this::toResource).forEach(resources::addResource);
-        resources.addSelf(Link.with(self()));
+        stream.map(this::toResource).forEach(resources::addResource);
+        addPagination(resources, offset, size, totalItems);
         return resources;
     }
 
