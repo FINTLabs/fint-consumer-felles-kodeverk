@@ -1,10 +1,14 @@
 package no.fint.consumer.config;
 
-import no.fint.consumer.utils.RestEndpoints;
-import java.util.Map;
 import com.google.common.collect.ImmutableMap;
+import no.fint.consumer.utils.RestEndpoints;
+import no.fint.model.felles.kodeverk.Fylke;
+import no.fint.model.felles.kodeverk.Kommune;
+import no.fint.model.felles.kodeverk.iso.Kjonn;
+import no.fint.model.felles.kodeverk.iso.Landkode;
+import no.fint.model.felles.kodeverk.iso.Sprak;
 
-import no.fint.model.felles.kodeverk.*;
+import java.util.Map;
 
 public class LinkMapper {
 
