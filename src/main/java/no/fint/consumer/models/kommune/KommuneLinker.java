@@ -1,6 +1,5 @@
 package no.fint.consumer.models.kommune;
 
-import no.fint.model.resource.Link;
 import no.fint.model.resource.felles.kodeverk.KommuneResource;
 import no.fint.model.resource.felles.kodeverk.KommuneResources;
 import no.fint.relations.FintLinker;
@@ -26,9 +25,14 @@ public class KommuneLinker extends FintLinker<KommuneResource> {
 
     @Override
     public KommuneResources toResources(Collection<KommuneResource> collection) {
+        return toResources(collection.stream(), 0, 0, collection.size());
+    }
+
+    @Override
+    public KommuneResources toResources(Stream<KommuneResource> stream, int offset, int size, int totalItems) {
         KommuneResources resources = new KommuneResources();
-        collection.stream().map(this::toResource).forEach(resources::addResource);
-        resources.addSelf(Link.with(self()));
+        stream.map(this::toResource).forEach(resources::addResource);
+        addPagination(resources, offset, size, totalItems);
         return resources;
     }
 

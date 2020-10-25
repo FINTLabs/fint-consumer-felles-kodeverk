@@ -12,14 +12,15 @@ import java.util.Map;
 
 public class LinkMapper {
 
-	public static Map<String, String> linkMapper(String contextPath) {
-		return ImmutableMap.<String,String>builder()
-			.put(Fylke.class.getName(), contextPath + RestEndpoints.FYLKE)
-			.put(Kjonn.class.getName(), contextPath + RestEndpoints.KJONN)
-			.put(Landkode.class.getName(), contextPath + RestEndpoints.LANDKODE)
-			.put(Sprak.class.getName(), contextPath + RestEndpoints.SPRAK)
-			.put(Kommune.class.getName(), contextPath + RestEndpoints.KOMMUNE)
-			.build();
-	}
+    public static Map<String, String> linkMapper(String contextPath) {
+        return ImmutableMap.<String,String>builder()
+            .put(Fylke.class.getName(), contextPath + RestEndpoints.FYLKE)
+            .put(Kjonn.class.getName(), contextPath + RestEndpoints.KJONN)
+            .put(Kommune.class.getName(), contextPath + RestEndpoints.KOMMUNE)
+            .put(Landkode.class.getName(), contextPath + RestEndpoints.LANDKODE)
+            .put(Sprak.class.getName(), contextPath + RestEndpoints.SPRAK)
+            /* .put(TODO,TODO) */
+            .build();
+    }
 
 }
