@@ -19,5 +19,5 @@ fint:
   members: localhost
 
 server:
- context-path: ""
+ context-path: /felles/kodeverk
  port: 8080
