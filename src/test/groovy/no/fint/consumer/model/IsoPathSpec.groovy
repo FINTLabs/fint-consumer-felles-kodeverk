@@ -50,9 +50,6 @@ class IsoPathSpec extends Specification {
         )
 
         then:
-        1 * cacheService.getKjonnBySystemId('test.org', '1') >> Optional.of(new KjonnResource(
-                navn: 'Mann'
-        ))
         response.andExpect(status().is2xxSuccessful()).andExpect(forwardedUrl('/kjonn/systemid/1'))
     }
 }
