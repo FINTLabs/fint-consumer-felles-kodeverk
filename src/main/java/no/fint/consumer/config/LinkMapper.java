@@ -8,6 +8,7 @@ import no.fint.model.felles.kodeverk.iso.Kjonn;
 import no.fint.model.felles.kodeverk.Kommune;
 import no.fint.model.felles.kodeverk.iso.Landkode;
 import no.fint.model.felles.kodeverk.iso.Sprak;
+import no.fint.model.felles.kodeverk.Valuta;
 
 public class LinkMapper {
 
@@ -18,6 +19,7 @@ public class LinkMapper {
             .put(Kommune.class.getName(), contextPath + RestEndpoints.KOMMUNE)
             .put(Landkode.class.getName(), contextPath + RestEndpoints.LANDKODE)
             .put(Sprak.class.getName(), contextPath + RestEndpoints.SPRAK)
+            .put(Valuta.class.getName(), contextPath + RestEndpoints.VALUTA)
             /* .put(TODO,TODO) */
             .build();
     }

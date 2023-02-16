@@ -9,5 +9,6 @@ public enum RestEndpoints {
 	public static final String KOMMUNE = "/kommune";
 	public static final String LANDKODE = "/landkode";
 	public static final String SPRAK = "/sprak";
+	public static final String VALUTA = "/valuta";
 
 }

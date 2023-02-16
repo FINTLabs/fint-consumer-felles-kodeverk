@@ -23,5 +23,8 @@ public enum Constants {
     public static final String CACHE_INITIALDELAY_SPRAK = "${fint.consumer.cache.initialDelay.sprak:1300000}";
     public static final String CACHE_FIXEDRATE_SPRAK = "${fint.consumer.cache.fixedRate.sprak:900000}";
     
+    public static final String CACHE_INITIALDELAY_VALUTA = "${fint.consumer.cache.initialDelay.valuta:1400000}";
+    public static final String CACHE_FIXEDRATE_VALUTA = "${fint.consumer.cache.fixedRate.valuta:900000}";
+    
 
 }
