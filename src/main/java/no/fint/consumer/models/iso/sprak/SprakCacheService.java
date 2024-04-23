@@ -107,7 +107,10 @@ public class SprakCacheService extends CacheService<SprakResource> {
         } else {
             data = objectMapper.convertValue(event.getData(), javaType);
         }
-        data.forEach(linker::mapLinks);
+        data.forEach(resource -> {
+            linker.mapLinks(resource);
+            linker.resetSelfLinks(resource);
+        });
         if (IsoActions.valueOf(event.getAction()) == IsoActions.UPDATE_SPRAK) {
             if (event.getResponseStatus() == ResponseStatus.ACCEPTED || event.getResponseStatus() == ResponseStatus.CONFLICT) {
                 List<CacheObject<SprakResource>> cacheObjects = data
