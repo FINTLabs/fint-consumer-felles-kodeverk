@@ -182,7 +182,7 @@ public class ValutaController {
 
             fintAuditService.audit(response, Status.SENT_TO_CLIENT);
 
-            return linker.toResource(valuta);
+            return linker.mapAndResetLinks(valuta);
         }    
     }
 
@@ -226,7 +226,7 @@ public class ValutaController {
 
             fintAuditService.audit(response, Status.SENT_TO_CLIENT);
 
-            return linker.toResource(valuta);
+            return linker.mapAndResetLinks(valuta);
         }    
     }
 

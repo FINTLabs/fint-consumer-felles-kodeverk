@@ -182,7 +182,7 @@ public class FylkeController {
 
             fintAuditService.audit(response, Status.SENT_TO_CLIENT);
 
-            return linker.toResource(fylke);
+            return linker.mapAndResetLinks(fylke);
         }    
     }
 
