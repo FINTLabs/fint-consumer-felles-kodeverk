@@ -182,7 +182,7 @@ public class SprakController {
 
             fintAuditService.audit(response, Status.SENT_TO_CLIENT);
 
-            return linker.toResource(sprak);
+            return linker.mapAndResetLinks(sprak);
         }    
     }
 

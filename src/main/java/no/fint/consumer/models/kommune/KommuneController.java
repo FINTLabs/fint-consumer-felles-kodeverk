@@ -182,7 +182,7 @@ public class KommuneController {
 
             fintAuditService.audit(response, Status.SENT_TO_CLIENT);
 
-            return linker.toResource(kommune);
+            return linker.mapAndResetLinks(kommune);
         }    
     }
 

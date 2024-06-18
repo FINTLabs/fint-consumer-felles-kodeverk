@@ -107,10 +107,7 @@ public class LandkodeCacheService extends CacheService<LandkodeResource> {
         } else {
             data = objectMapper.convertValue(event.getData(), javaType);
         }
-        data.forEach(resource -> {
-            linker.mapLinks(resource);
-            linker.resetSelfLinks(resource);
-        });
+        data.forEach(linker::mapLinks);
         if (IsoActions.valueOf(event.getAction()) == IsoActions.UPDATE_LANDKODE) {
             if (event.getResponseStatus() == ResponseStatus.ACCEPTED || event.getResponseStatus() == ResponseStatus.CONFLICT) {
                 List<CacheObject<LandkodeResource>> cacheObjects = data
