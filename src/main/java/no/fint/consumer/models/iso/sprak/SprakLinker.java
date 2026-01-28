@@ -1,7 +1,7 @@
-package no.fint.consumer.models.iso.sprak;
+package no.fint.consumer.models.sprak;
 
-import no.fint.model.resource.felles.kodeverk.iso.SprakResource;
-import no.fint.model.resource.felles.kodeverk.iso.SprakResources;
+import no.novari.fint.model.resource.felles.kodeverk.iso.SprakResource;
+import no.novari.fint.model.resource.felles.kodeverk.iso.SprakResources;
 import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 

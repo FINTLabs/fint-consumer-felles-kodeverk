@@ -43,9 +43,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import no.fint.model.resource.felles.kodeverk.KommuneResource;
-import no.fint.model.resource.felles.kodeverk.KommuneResources;
-import no.fint.model.felles.kodeverk.KodeverkActions;
+import no.novari.fint.model.resource.felles.kodeverk.KommuneResource;
+import no.novari.fint.model.resource.felles.kodeverk.KommuneResources;
+import no.novari.fint.model.felles.kodeverk.KodeverkActions;
 
 @Slf4j
 @Api(tags = {"Kommune"})

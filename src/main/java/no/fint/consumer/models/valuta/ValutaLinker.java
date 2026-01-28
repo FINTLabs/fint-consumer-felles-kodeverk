@@ -1,7 +1,7 @@
 package no.fint.consumer.models.valuta;
 
-import no.fint.model.resource.felles.kodeverk.ValutaResource;
-import no.fint.model.resource.felles.kodeverk.ValutaResources;
+import no.novari.fint.model.resource.felles.kodeverk.ValutaResource;
+import no.novari.fint.model.resource.felles.kodeverk.ValutaResources;
 import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 

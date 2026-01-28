@@ -1,4 +1,4 @@
-package no.fint.consumer.models.iso.landkode;
+package no.fint.consumer.models.landkode;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import no.fint.model.felles.kodeverk.iso.Landkode;
-import no.fint.model.resource.felles.kodeverk.iso.LandkodeResource;
-import no.fint.model.felles.kodeverk.iso.IsoActions;
-import no.fint.model.felles.kompleksedatatyper.Identifikator;
+import no.novari.fint.model.felles.kodeverk.iso.Landkode;
+import no.novari.fint.model.resource.felles.kodeverk.iso.LandkodeResource;
+import no.novari.fint.model.felles.kodeverk.iso.IsoActions;
+import no.novari.fint.model.felles.kompleksedatatyper.Identifikator;
 
 @Slf4j
 @Service

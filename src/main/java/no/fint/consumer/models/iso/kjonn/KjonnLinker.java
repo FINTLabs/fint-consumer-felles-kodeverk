@@ -1,7 +1,7 @@
-package no.fint.consumer.models.iso.kjonn;
+package no.fint.consumer.models.kjonn;
 
-import no.fint.model.resource.felles.kodeverk.iso.KjonnResource;
-import no.fint.model.resource.felles.kodeverk.iso.KjonnResources;
+import no.novari.fint.model.resource.felles.kodeverk.iso.KjonnResource;
+import no.novari.fint.model.resource.felles.kodeverk.iso.KjonnResources;
 import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 

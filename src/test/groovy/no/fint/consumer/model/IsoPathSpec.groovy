@@ -1,7 +1,7 @@
 package no.fint.consumer.model
 
-import no.fint.consumer.models.iso.kjonn.KjonnCacheService
-import no.fint.model.resource.felles.kodeverk.iso.KjonnResource
+import no.fint.consumer.models.kjonn.KjonnCacheService
+import no.novari.fint.model.resource.felles.kodeverk.iso.KjonnResource
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc

@@ -43,9 +43,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import no.fint.model.resource.felles.kodeverk.FylkeResource;
-import no.fint.model.resource.felles.kodeverk.FylkeResources;
-import no.fint.model.felles.kodeverk.KodeverkActions;
+import no.novari.fint.model.resource.felles.kodeverk.FylkeResource;
+import no.novari.fint.model.resource.felles.kodeverk.FylkeResources;
+import no.novari.fint.model.felles.kodeverk.KodeverkActions;
 
 @Slf4j
 @Api(tags = {"Fylke"})

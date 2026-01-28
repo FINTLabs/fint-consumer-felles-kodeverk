@@ -1,4 +1,4 @@
-package no.fint.consumer.models.iso.kjonn;
+package no.fint.consumer.models.kjonn;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -43,9 +43,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import no.fint.model.resource.felles.kodeverk.iso.KjonnResource;
-import no.fint.model.resource.felles.kodeverk.iso.KjonnResources;
-import no.fint.model.felles.kodeverk.iso.IsoActions;
+import no.novari.fint.model.resource.felles.kodeverk.iso.KjonnResource;
+import no.novari.fint.model.resource.felles.kodeverk.iso.KjonnResources;
+import no.novari.fint.model.felles.kodeverk.iso.IsoActions;
 
 @Slf4j
 @Api(tags = {"Kjonn"})

@@ -1,7 +1,7 @@
 package no.fint.consumer.models.fylke;
 
-import no.fint.model.resource.felles.kodeverk.FylkeResource;
-import no.fint.model.resource.felles.kodeverk.FylkeResources;
+import no.novari.fint.model.resource.felles.kodeverk.FylkeResource;
+import no.novari.fint.model.resource.felles.kodeverk.FylkeResources;
 import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 

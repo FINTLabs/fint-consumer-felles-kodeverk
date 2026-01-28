@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import no.fint.model.felles.kodeverk.Kommune;
-import no.fint.model.resource.felles.kodeverk.KommuneResource;
-import no.fint.model.felles.kodeverk.KodeverkActions;
-import no.fint.model.felles.kompleksedatatyper.Identifikator;
+import no.novari.fint.model.felles.kodeverk.Kommune;
+import no.novari.fint.model.resource.felles.kodeverk.KommuneResource;
+import no.novari.fint.model.felles.kodeverk.KodeverkActions;
+import no.novari.fint.model.felles.kompleksedatatyper.Identifikator;
 
 @Slf4j
 @Service

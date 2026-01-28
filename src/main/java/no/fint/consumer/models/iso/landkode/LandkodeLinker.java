@@ -1,7 +1,7 @@
-package no.fint.consumer.models.iso.landkode;
+package no.fint.consumer.models.landkode;
 
-import no.fint.model.resource.felles.kodeverk.iso.LandkodeResource;
-import no.fint.model.resource.felles.kodeverk.iso.LandkodeResources;
+import no.novari.fint.model.resource.felles.kodeverk.iso.LandkodeResource;
+import no.novari.fint.model.resource.felles.kodeverk.iso.LandkodeResources;
 import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package no.fint.consumer.models.iso.kjonn;
+package no.fint.consumer.models.kjonn;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import no.fint.model.felles.kodeverk.iso.Kjonn;
-import no.fint.model.resource.felles.kodeverk.iso.KjonnResource;
-import no.fint.model.felles.kodeverk.iso.IsoActions;
-import no.fint.model.felles.kompleksedatatyper.Identifikator;
+import no.novari.fint.model.felles.kodeverk.iso.Kjonn;
+import no.novari.fint.model.resource.felles.kodeverk.iso.KjonnResource;
+import no.novari.fint.model.felles.kodeverk.iso.IsoActions;
+import no.novari.fint.model.felles.kompleksedatatyper.Identifikator;
 
 @Slf4j
 @Service
